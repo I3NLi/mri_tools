@@ -11,12 +11,10 @@
 <script>
 export default {
   name: 'App',
-  data:{
-  },
   methods: {
 
   },
-}
+};
 </script>
 <style>
 /* #app {

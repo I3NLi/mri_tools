@@ -1,24 +1,24 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import Home from '../pages/Home'
-import DrugsChecker from '../pages/DrugsChecker'
-import PatientDashboard from '../pages/PatientDashboard'
-import BodyTemperature from '../pages/BodyTemperature'
-import BloodPressure from '../pages/BloodPressure'
+import Home from '../pages/Home';
+import DrugsChecker from '../pages/DrugsChecker';
+import PatientDashboard from '../pages/PatientDashboard';
+import BodyTemperature from '../pages/BodyTemperature';
+import BloodPressure from '../pages/BloodPressure';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
   },
   {
     path: '/drugsChecker',
     name: 'DrugsChecker',
-    component: DrugsChecker
+    component: DrugsChecker,
   },
   {
     path: '/patientDashboard',
@@ -26,7 +26,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: PatientDashboard
+    component: PatientDashboard,
   },
   {
     path: '/bodyTemperature',
@@ -34,7 +34,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: BodyTemperature
+    component: BodyTemperature,
   },
   {
     path: '/bloodPressure',
@@ -42,16 +42,16 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: BloodPressure
-  }
+    component: BloodPressure,
+  },
 
 
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

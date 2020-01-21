@@ -59,11 +59,39 @@ import {
 
 const codeReader = new BrowserMultiFormatReader();
 
+// import Ssuccess from "../assets/success.mp3";
+// import Sfailure from "../assets/failure.mp3";
+
+// function playSound(music){
+//      var borswer = window.navigator.userAgent.toLowerCase();
+//      if ( borswer.indexOf( "ie" ) >= 0 ){
+//        //IE内核浏览器
+//        var strEmbed = '<embed name="embedPlay" src='+music+' autostart="true" hidden="true" loop="false"></embed>';
+//        if ( $( "body" ).find( "embed" ).length <= 0 )
+//          $( "body" ).append( strEmbed );
+//        var embed = document.embedPlay;
+//
+//        //浏览器不支持 audion，则使用 embed 播放
+//        embed.volume = 100;
+//        //embed.play();这个不需要
+//      } else{
+//        //非IE内核浏览器
+//        var strAudio = "<audio id='audioPlay' src="+music+" hidden='true'>";
+//        if ( $( "body" ).find( "audio" ).length <= 0 )
+//          $( "body" ).append( strAudio );
+//        var audio = document.getElementById( "audioPlay" );
+//
+//        //浏览器支持 audion
+//        audio.play();
+//      }
+//    }
+//
+//    playSound(Sfailure);
 export default {
   name: 'DrugsChecker',
   data() {
     return {
-      videoInputDevices: 0,
+      videoInputDevices: null,
       videoInputDevice: 0,
       drugs: [{
           id: "12345678909876543",
@@ -73,10 +101,10 @@ export default {
           checked: false,
         },
         {
-          id: "123456789",
-          name: "Dolo-Dobendan® 1,4 mg / 10 mg",
+          id: "4008491119771",
+          name: "Immusan C 800 Depot Complex",
           Brand: "",
-          dose: "3ml",
+          dose: "3 ul",
           checked: false,
         },
       ],

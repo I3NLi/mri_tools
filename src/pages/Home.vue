@@ -1,6 +1,6 @@
 <template>
 <mu-card style="width: 100%;  margin: 0 auto; ">
-  <mu-card-header title="unspecified" sub-title="" @click="$router.push('/')">
+  <mu-card-header title="No patient specified" sub-title="" @click="$router.push('/')">
     <mu-avatar slot="avatar">
       <i class="material-icons">
         accessible_forward
@@ -15,8 +15,7 @@
     right: 16px;
     position: absolute;
     font-size: 1.6em;
-    z-index: 999999999;"
-    @click="nextViedeoInputDevices()">
+    z-index: 999999999;" @click="nextViedeoInputDevices()">
       sync
     </i>
     <video id="video" width="100%" height="100%" />
@@ -24,7 +23,7 @@
   <mu-card-title title="" sub-title="Or enter patient ID manually"></mu-card-title>
 
   <mu-card-text>
-    <mu-text-field v-model="scannResult" placeholder="Please input......"></mu-text-field><br/>
+    <mu-text-field v-model="scannResult" placeholder="Please input......"></mu-text-field><br />
   </mu-card-text>
   <mu-card-actions>
     <mu-button flat @click="reset">Reset</mu-button>
@@ -35,14 +34,18 @@
 
 <script>
 import {
-  BrowserQRCodeReader
+  BrowserMultiFormatReader,
+  NotFoundException
 } from '@zxing/library';
+
+const codeReader = new BrowserMultiFormatReader();
 
 export default {
   name: 'Home',
   data() {
     return {
-      videoInputDevices: 0,
+      videoInputDevices: undefined,
+      videoInputDevice: 0,
       drugs: [{
           id: "12345678909876543",
           name: "Dolo-Dobendan® 1,4 mg / 10 mg",
@@ -67,13 +70,13 @@ export default {
 
   },
   methods: {
-    reset(){
-      this.scannResult="";
+    reset() {
+      this.scannResult = "";
     },
-    confirm(){
+    confirm() {
       this.$router.push('/patientDashboard');
     },
-    closeAlert () {
+    closeAlert() {
       this.hasError = false;
     },
     searchIsDrugOnTheList(id) {
@@ -91,25 +94,29 @@ export default {
     },
     startScann() {
       let vm = this;
-      const codeReader = new BrowserQRCodeReader();
       codeReader
         .listVideoInputDevices()
         .then(videoInputDevices => {
-          codeReader
-            .decodeFromInputVideoDevice(videoInputDevices[vm.videoInputDevices % videoInputDevices.length].deviceId, 'video')
-            .then(result => {
-              vm.searchIsDrugOnTheList(result.text);
-              vm.scannResult = result.text;
-              vm.$router.push('/patientDashboard')
-              console.log(result.text)
-            })
-            .catch(err => console.error(err));
+          vm.videoInputDevices = videoInputDevices;
+          vm.readCode();
+        })
+        .catch(err => console.error(err));
+    },
+    readCode() {
+      let vm = this;
+      codeReader
+      .decodeFromInputVideoDevice(vm.videoInputDevices[vm.videoInputDevice % vm.videoInputDevices.length].deviceId, 'video')
+        .then(result => {
+          vm.scannResult = result.text;
+          vm.$router.push('/patientDashboard');
+          console.log(result);
         })
         .catch(err => console.error(err));
     },
     nextViedeoInputDevices() {
       let vm = this;
-      vm.videoInputDevices++;
+      codeReader.reset();
+      vm.videoInputDevice++;
       vm.startScann();
     }
   },
